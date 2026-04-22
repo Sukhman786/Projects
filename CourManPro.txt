@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 
@@ -7,3 +8,50 @@
 
 
 
+=======
+Tracking ID -> S6085
+Booking Date & Time -> 04/04/2026 15:25:33
+
+---Sender Details---
+Name -> aohdh
+Mobile No -> 8989786774
+Address -> wojdoh
+
+---Receiver Details---
+Name -> wiehdhd
+Mobile No -> 8767253621
+Address -> ewoeiofhfih
+
+---Parcel Details---
+Parcel Type -> D
+Weight (in grams) -> 10.0
+Delivery Type -> N
+
+---Payment Details---
+Mode -> C
+Charges -> Rs.300.0
+*---------------------------------------------------------------------------*
+
+Tracking ID -> S1955
+Booking Date & Time -> 04/04/2026 15:47:34
+
+---Sender Details---
+Name -> Sukhman
+Mobile No -> 1234546543
+Address -> wr
+
+---Receiver Details---
+Name -> wr
+Mobile No -> 2342324324
+Address -> rwere
+
+---Parcel Details---
+Parcel Type -> D
+Weight (in grams) -> 12.0
+Delivery Type -> N
+
+---Payment Details---
+Mode -> O
+Charges -> Rs.360.0
+*---------------------------------------------------------------------------*
+>>>>>>> b0d94230d7f37dd77e324b7124887ac01c3014b2
