@@ -15,7 +15,7 @@ def get_date_time():
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls')
 
 class SenderDetails:
     def __init__(self):
