@@ -28,14 +28,42 @@ def lru(user_input, pages, capacity):
         
         history.append(frames + ["-"] * (capacity - len(frames)))
 
-    df = pd.DataFrame(history).transpose()
-    df.index = [f"Slot {i+1}" for i in range(capacity)]
-    df.loc['Result'] = results
-    print(f"\n{' '*10} LRU ALGORITHM OUTPUT")
-    print(tabulate(df, headers=pages, tablefmt="fancy_grid", stralign="center"))
-    print(f"Total Page Faults: {faults}")
+    
+    B_CYAN   = "\033[1;96m"
+    B_RED    = "\033[1;91m"
+    B_GREEN  = "\033[1;92m"
+    B_YELLOW = "\033[1;93m"
+    B_WHITE  = "\033[1;97m"
+    RESET    = "\033[1;37m"
 
-    input("\nPress Enter to Continue.......")
+    colored_history = []
+    for step in history:
+        colored_step = [f"{RESET}{B_WHITE}{item}{RESET}{B_CYAN}" for item in step]
+        colored_history.append(colored_step)
+
+    df = pd.DataFrame(colored_history).transpose()
+    df.index = [f"{RESET}{B_YELLOW}Slot {i+1}{RESET}{B_CYAN}" for i in range(capacity)]
+    
+    colored_results = []
+    for r in results:
+        color = B_GREEN if r == "HIT" else B_RED
+        colored_results.append(f"{RESET}{color}{r}{RESET}{B_CYAN}")
+    df.loc[f"{RESET}Result{RESET}{B_CYAN}"] = colored_results
+
+    colored_headers = [f"{RESET}{B_YELLOW}{p}{RESET}{B_CYAN}" for p in pages]
+
+    # 5. Final Print
+    print(f"\n{RESET}" + "="*50)
+    print(f"{B_RED}            ALGORITHM OUTPUT{RESET}")
+    print("="*50)
+    
+    table_output = tabulate(df, headers=colored_headers, tablefmt="fancy_grid", stralign="center")
+    print(B_CYAN + table_output + RESET)
+    
+    print(f"\n{RESET}Total Page Faults: {B_RED}{faults}{RESET}\n")
+
+
+    input("\n\033[1;37mPress Enter to Continue.......")
 
 # ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,14 +99,41 @@ def optimal(user_input, pages, capacity):
         
         history.append(frames + ["-"] * (capacity - len(frames)))
 
-    df = pd.DataFrame(history).transpose()
-    df.index = [f"Slot {i+1}" for i in range(capacity)]
-    df.loc['Result'] = results
-    print(f"\n{' '*10} OPTIMAL ALGORITHM OUTPUT")
-    print(tabulate(df, headers=pages, tablefmt="fancy_grid", stralign="center"))
-    print(f"Total Page Faults: {faults}")
 
-    input("\nPress Enter to Continue.......")
+    B_CYAN   = "\033[1;96m"
+    B_RED    = "\033[1;91m"
+    B_GREEN  = "\033[1;92m"
+    B_YELLOW = "\033[1;93m"
+    B_WHITE  = "\033[1;97m"
+    RESET    = "\033[1;37m"
+
+    colored_history = []
+    for step in history:
+        colored_step = [f"{RESET}{B_WHITE}{item}{RESET}{B_CYAN}" for item in step]
+        colored_history.append(colored_step)
+
+    df = pd.DataFrame(colored_history).transpose()
+    df.index = [f"{RESET}{B_YELLOW}Slot {i+1}{RESET}{B_CYAN}" for i in range(capacity)]
+    
+    colored_results = []
+    for r in results:
+        color = B_GREEN if r == "HIT" else B_RED
+        colored_results.append(f"{RESET}{color}{r}{RESET}{B_CYAN}")
+    df.loc[f"{RESET}Result{RESET}{B_CYAN}"] = colored_results
+
+    colored_headers = [f"{RESET}{B_YELLOW}{p}{RESET}{B_CYAN}" for p in pages]
+
+    # 5. Final Print
+    print(f"\n{RESET}" + "="*50)
+    print(f"{B_RED}            ALGORITHM OUTPUT{RESET}")
+    print("="*50)
+    
+    table_output = tabulate(df, headers=colored_headers, tablefmt="fancy_grid", stralign="center")
+    print(B_CYAN + table_output + RESET)
+    
+    print(f"\n{RESET}Total Page Faults: {B_RED}{faults}{RESET}\n")
+
+    input("\n\033[1;37mPress Enter to Continue.......")
 
 # ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,25 +150,25 @@ def menu():
         choice = input("\n\033[1;37mHere :- ")
         
         if choice == '1':
-            user_input = input("Enter Reference String (e.g., 7 0 1 2): ")
+            user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
             pages = list(map(int, user_input.split()))
-            capacity = int(input("Enter Frame Capacity: "))
+            capacity = int(input("\n\033[1;91mEnter Frame Capacity: \033[1;37m"))
 
             lru(user_input, pages, capacity)
 
 
         elif choice == '2':
-            user_input = input("Enter Reference String (e.g., 7 0 1 2): ")
+            user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
             pages = list(map(int, user_input.split()))
-            capacity = int(input("Enter Frame Capacity: "))
+            capacity = int(input("\n\033[1;91mEnter Frame Capacity: \033[1;37m"))
 
             optimal(user_input, pages, capacity)
         
 
         elif choice == '3':
-            user_input = input("Enter Reference String (e.g., 7 0 1 2): ")
+            user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
             pages = list(map(int, user_input.split()))
-            capacity = int(input("Enter Frame Capacity: "))
+            capacity = int(input("\n\033[1;91mEnter Frame Capacity: \033[1;37m"))
 
             lru(user_input, pages, capacity)
             optimal(user_input, pages, capacity)
@@ -147,7 +202,7 @@ def welcome():
     empty_line = "\033[1;33m*" + " " * (width - 2) + "*\033[1;37m"
 
     subtitle = "Fast - Reliable - Efficient"
-    info1 = "Manage your parcels with ease"
+    info1 = "Solve Page Replacements Algos Fastly"
     info2 = "LRU and Optimal Page Replacement Algorithms"
     title_figlet = pyfiglet.figlet_format("Page Replacement", font='big')
 
