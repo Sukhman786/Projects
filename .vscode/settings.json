@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-    "python-envs.defaultEnvManager": "ms-python.python:system"
-=======
     "files.associations": {
         "ostream": "cpp"
     }
->>>>>>> b0d94230d7f37dd77e324b7124887ac01c3014b2
 }
