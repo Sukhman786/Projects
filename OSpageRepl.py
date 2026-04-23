@@ -6,7 +6,7 @@ import pyfiglet
 import shutil
 
 # -------- LRU PAGE REPLACEMENT --------
-def lru(user_input, pages, capacity):    
+def lru(user_input, pages, num_frames):    
     frames = []
     history = []
     results = []
@@ -20,13 +20,13 @@ def lru(user_input, pages, capacity):
         else:
             results.append("FAULT")
             faults += 1
-            if len(frames) < capacity:
+            if len(frames) < num_frames:
                 frames.append(p)
             else:
                 frames.pop(0)
                 frames.append(p)
         
-        history.append(frames + ["-"] * (capacity - len(frames)))
+        history.append(frames + ["-"] * (num_frames - len(frames)))
 
     
     B_CYAN   = "\033[1;96m"
@@ -42,7 +42,7 @@ def lru(user_input, pages, capacity):
         colored_history.append(colored_step)
 
     df = pd.DataFrame(colored_history).transpose()
-    df.index = [f"{RESET}{B_YELLOW}Slot {i+1}{RESET}{B_CYAN}" for i in range(capacity)]
+    df.index = [f"{RESET}{B_YELLOW}Slot {i+1}{RESET}{B_CYAN}" for i in range(num_frames)]
     
     colored_results = []
     for r in results:
@@ -54,7 +54,7 @@ def lru(user_input, pages, capacity):
 
     # 5. Final Print
     print(f"\n{RESET}" + "="*50)
-    print(f"{B_RED}            ALGORITHM OUTPUT{RESET}")
+    print(f"{B_RED}            LRU ALGORITHM OUTPUT{RESET}")
     print("="*50)
     
     table_output = tabulate(df, headers=colored_headers, tablefmt="fancy_grid", stralign="center")
@@ -68,7 +68,7 @@ def lru(user_input, pages, capacity):
 # ///////////////////////////////////////////////////////////////////////////////////////////////
 
 # -------- OPTIMAL PAGE REPLACEMENT --------
-def optimal(user_input, pages, capacity):
+def optimal(user_input, pages, num_frames):
     frames = []
     history = []
     results = []
@@ -81,7 +81,7 @@ def optimal(user_input, pages, capacity):
         else:
             results.append("FAULT")
             faults += 1
-            if len(frames) < capacity:
+            if len(frames) < num_frames:
                 frames.append(curr)
             else:
                 idx_to_replace = -1
@@ -97,7 +97,7 @@ def optimal(user_input, pages, capacity):
                             idx_to_replace = j
                 frames[idx_to_replace] = curr
         
-        history.append(frames + ["-"] * (capacity - len(frames)))
+        history.append(frames + ["-"] * (num_frames - len(frames)))
 
 
     B_CYAN   = "\033[1;96m"
@@ -113,7 +113,7 @@ def optimal(user_input, pages, capacity):
         colored_history.append(colored_step)
 
     df = pd.DataFrame(colored_history).transpose()
-    df.index = [f"{RESET}{B_YELLOW}Slot {i+1}{RESET}{B_CYAN}" for i in range(capacity)]
+    df.index = [f"{RESET}{B_YELLOW}Slot {i+1}{RESET}{B_CYAN}" for i in range(num_frames)]
     
     colored_results = []
     for r in results:
@@ -125,7 +125,7 @@ def optimal(user_input, pages, capacity):
 
     # 5. Final Print
     print(f"\n{RESET}" + "="*50)
-    print(f"{B_RED}            ALGORITHM OUTPUT{RESET}")
+    print(f"{B_RED}            OPTIMAL ALGORITHM OUTPUT{RESET}")
     print("="*50)
     
     table_output = tabulate(df, headers=colored_headers, tablefmt="fancy_grid", stralign="center")
@@ -150,28 +150,49 @@ def menu():
         choice = input("\n\033[1;37mHere :- ")
         
         if choice == '1':
-            user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
-            pages = list(map(int, user_input.split()))
-            capacity = int(input("\n\033[1;91mEnter Frame Capacity: \033[1;37m"))
 
-            lru(user_input, pages, capacity)
+            while True:
+                user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
+
+                if user_input.replace(" ", "").isalpha() and len(user_input) > 0:
+                    print("\n\033[1;37mInvalid String! Please use positive integers only.\033[1;38;5;205m")
+
+                else:
+                    break
+                    
+            
+            while True:
+                try:
+                    num_frames = int(input("\n\033[1;91mEnter Number of Frames : \033[1;37m"))
+                    
+                    if num_frames > 0:
+                        break
+                    print("Weight must be positive.")
+
+                except ValueError:
+                    print("Please enter a numeric value.")
+
+            
+            pages = list(map(int, user_input.split()))
+
+            lru(user_input, pages, num_frames)
 
 
         elif choice == '2':
             user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
             pages = list(map(int, user_input.split()))
-            capacity = int(input("\n\033[1;91mEnter Frame Capacity: \033[1;37m"))
+            num_frames = int(input("\n\033[1;91mEnter Frame num_frames: \033[1;37m"))
 
-            optimal(user_input, pages, capacity)
+            optimal(user_input, pages, num_frames)
         
 
         elif choice == '3':
             user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
             pages = list(map(int, user_input.split()))
-            capacity = int(input("\n\033[1;91mEnter Frame Capacity: \033[1;37m"))
+            num_frames = int(input("\n\033[1;91mEnter Frame num_frames: \033[1;37m"))
 
-            lru(user_input, pages, capacity)
-            optimal(user_input, pages, capacity)
+            lru(user_input, pages, num_frames)
+            optimal(user_input, pages, num_frames)
 
 
         else: break
