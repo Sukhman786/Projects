@@ -6,17 +6,19 @@ import pyfiglet
 import shutil
 
 # -------- LRU PAGE REPLACEMENT --------
-def lru(user_input, pages, num_frames):    
+def lru(pages, num_frames):    
     frames = []
     history = []
     results = []
     faults = 0
+    hits = 0
 
     for p in pages:
         if p in frames:
             results.append("HIT")
             frames.remove(p)
             frames.append(p)
+            hits += 1
         else:
             results.append("FAULT")
             faults += 1
@@ -28,7 +30,8 @@ def lru(user_input, pages, num_frames):
         
         history.append(frames + ["-"] * (num_frames - len(frames)))
 
-    
+    # Table and Output formatting---------------------------------------
+  
     B_CYAN   = "\033[1;96m"
     B_RED    = "\033[1;91m"
     B_GREEN  = "\033[1;92m"
@@ -52,32 +55,33 @@ def lru(user_input, pages, num_frames):
 
     colored_headers = [f"{RESET}{B_YELLOW}{p}{RESET}{B_CYAN}" for p in pages]
 
-    # 5. Final Print
     print(f"\n{RESET}" + "="*50)
-    print(f"{B_RED}            LRU ALGORITHM OUTPUT{RESET}")
+    print(f"{B_YELLOW}            LRU ALGORITHM OUTPUT{RESET}")
     print("="*50)
     
     table_output = tabulate(df, headers=colored_headers, tablefmt="fancy_grid", stralign="center")
     print(B_CYAN + table_output + RESET)
     
+    print(f"\n{RESET}Total Hits: {B_GREEN}{hits}{RESET}\n")
     print(f"\n{RESET}Total Page Faults: {B_RED}{faults}{RESET}\n")
-
 
     input("\n\033[1;37mPress Enter to Continue.......")
 
 # ///////////////////////////////////////////////////////////////////////////////////////////////
 
 # -------- OPTIMAL PAGE REPLACEMENT --------
-def optimal(user_input, pages, num_frames):
+def optimal(pages, num_frames):
     frames = []
     history = []
     results = []
     faults = 0
+    hits = 0
 
     for i in range(len(pages)):
         curr = pages[i]
         if curr in frames:
             results.append("HIT")
+            hits += 1
         else:
             results.append("FAULT")
             faults += 1
@@ -99,6 +103,7 @@ def optimal(user_input, pages, num_frames):
         
         history.append(frames + ["-"] * (num_frames - len(frames)))
 
+    # Table and Output formatting---------------------------------------  
 
     B_CYAN   = "\033[1;96m"
     B_RED    = "\033[1;91m"
@@ -123,14 +128,14 @@ def optimal(user_input, pages, num_frames):
 
     colored_headers = [f"{RESET}{B_YELLOW}{p}{RESET}{B_CYAN}" for p in pages]
 
-    # 5. Final Print
     print(f"\n{RESET}" + "="*50)
-    print(f"{B_RED}            OPTIMAL ALGORITHM OUTPUT{RESET}")
+    print(f"{B_YELLOW}            OPTIMAL ALGORITHM OUTPUT{RESET}")
     print("="*50)
     
     table_output = tabulate(df, headers=colored_headers, tablefmt="fancy_grid", stralign="center")
     print(B_CYAN + table_output + RESET)
     
+    print(f"\n{RESET}Total Hits: {B_GREEN}{hits}{RESET}\n")
     print(f"\n{RESET}Total Page Faults: {B_RED}{faults}{RESET}\n")
 
     input("\n\033[1;37mPress Enter to Continue.......")
@@ -175,24 +180,67 @@ def menu():
             
             pages = list(map(int, user_input.split()))
 
-            lru(user_input, pages, num_frames)
+            lru(pages, num_frames)
 
+#---------------------------------------------------------------------------------------------------------------------
 
         elif choice == '2':
-            user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
-            pages = list(map(int, user_input.split()))
-            num_frames = int(input("\n\033[1;91mEnter Frame num_frames: \033[1;37m"))
+            while True:
+                user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
 
-            optimal(user_input, pages, num_frames)
-        
+                if user_input.replace(" ", "").isalpha() and len(user_input) > 0:
+                    print("\n\033[1;37mInvalid String! Please use positive integers only.\033[1;38;5;205m")
+
+                else:
+                    break
+                    
+            
+            while True:
+                try:
+                    num_frames = int(input("\n\033[1;91mEnter Number of Frames : \033[1;37m"))
+                    
+                    if num_frames > 0:
+                        break
+                    print("Weight must be positive.")
+
+                except ValueError:
+                    print("Please enter a numeric value.")
+
+            
+            pages = list(map(int, user_input.split()))
+
+            optimal(pages, num_frames)
+
+#---------------------------------------------------------------------------------------------------------------------
+    
 
         elif choice == '3':
-            user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
-            pages = list(map(int, user_input.split()))
-            num_frames = int(input("\n\033[1;91mEnter Frame num_frames: \033[1;37m"))
+            while True:
+                user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
 
-            lru(user_input, pages, num_frames)
-            optimal(user_input, pages, num_frames)
+                if user_input.replace(" ", "").isalpha() and len(user_input) > 0:
+                    print("\n\033[1;37mInvalid String! Please use positive integers only.\033[1;38;5;205m")
+
+                else:
+                    break
+                    
+            
+            while True:
+                try:
+                    num_frames = int(input("\n\033[1;91mEnter Number of Frames : \033[1;37m"))
+                    
+                    if num_frames > 0:
+                        break
+                    print("Weight must be positive.")
+
+                except ValueError:
+                    print("Please enter a numeric value.")
+
+            
+            pages = list(map(int, user_input.split()))
+
+            lru(pages, num_frames)
+            optimal(pages, num_frames)
 
 
         else: break
