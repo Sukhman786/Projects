@@ -159,7 +159,7 @@ def menu():
             while True:
                 user_input = input("\n\033[1;91mEnter Reference String (e.g., 7 0 1 2): \033[1;37m")
 
-                if user_input.replace(" ", "").isalpha() and len(user_input) > 0:
+                if user_input.replace(" ", "").isalpha() or len(user_input) < 1:
                     print("\n\033[1;37mInvalid String! Please use positive integers only.\033[1;38;5;205m")
 
                 else:
