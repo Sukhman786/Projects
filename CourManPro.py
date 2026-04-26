@@ -15,7 +15,7 @@ def get_date_time():
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls')
 
 class SenderDetails:
     def __init__(self):
@@ -54,7 +54,7 @@ def input_customer():
     
     while True:
         c.senmob = input("\033[1;38;5;205mSender's Mobile No :- \033[1;37m")
-        if len(c.senmob) == 10:
+        if len(c.senmob) == 10 and not c.senmob.replace(" ","").isalpha():
             break
         print("\n\033[1;37mInvalid Mobile Number\n\033[1;38;5;205mAgain, ")
 
@@ -70,7 +70,7 @@ def input_customer():
 
     while True:
         c.recmob = input("\033[1;38;5;205mReceiver's Mobile No :- \033[1;37m")
-        if len(c.recmob) == 10:
+        if len(c.recmob) == 10 and not c.recmob.replace(" ","").isalpha():
             break
         print("\n\033[1;37mInvalid Mobile Number\n\033[1;38;5;205mAgain, ")
 
