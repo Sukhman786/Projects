@@ -43,3 +43,49 @@ Delivery Type -> N
 Mode -> O
 Charges -> Rs.360.0
 *---------------------------------------------------------------------------*
+
+Tracking ID -> S8073
+Booking Date & Time -> 23/04/2026 13:50:55
+
+---Sender Details---
+Name -> fhfh
+Mobile No -> 1234567898
+Address -> fy
+
+---Receiver Details---
+Name -> gu
+Mobile No -> 1234567898
+Address -> gy
+
+---Parcel Details---
+Parcel Type -> F
+Weight (in grams) -> 100.0
+Delivery Type -> S
+
+---Payment Details---
+Mode -> C
+Charges -> Rs.18000.0
+*---------------------------------------------------------------------------*
+
+Tracking ID -> S8666
+Booking Date & Time -> 27/04/2026 20:07:54
+
+---Sender Details---
+Name -> SUKHMAN
+Mobile No -> 8284928781
+Address -> Bibi Kaulan ji Bhalai kendar, Tarn Taran Road, Amritsar
+
+---Receiver Details---
+Name -> RANDHAWA
+Mobile No -> 9877603243
+Address -> B-Block,Sandhu colony, G.T. Road, Chheharta, Amritsar
+
+---Parcel Details---
+Parcel Type -> D
+Weight (in grams) -> 100.0
+Delivery Type -> N
+
+---Payment Details---
+Mode -> C
+Charges -> Rs.3000.0
+*---------------------------------------------------------------------------*
