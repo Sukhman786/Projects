@@ -4,6 +4,8 @@ from datetime import datetime
 import pyfiglet
 import shutil
 import pygame
+import webbrowser
+from urllib.parse import quote
 
 LI = "*---------------------------------------------------------------------------*"
 
@@ -16,6 +18,17 @@ def get_date_time():
 
 def clear_screen():
     os.system('cls')
+
+def show_on_map(sender_addr, receiver_addr):
+    
+    base_url = "https://www.google.com/maps/dir/?api=1"
+    origin = quote(sender_addr)
+    destination = quote(receiver_addr)
+    
+    final_url = f"{base_url}&origin={origin}&destination={destination}"
+    
+    webbrowser.open(final_url)
+
 
 class SenderDetails:
     def __init__(self):
@@ -184,12 +197,22 @@ def search():
                     found = True
                     for j in range(i, len(lines)):
                         print("\033[1;32m]","\033[1;37m",lines[j], end="")
+
+                        if "Sender Details" in lines[j]:
+                            s_addr = lines[j+3].split("->")[1].strip()
+                        if "Receiver Details" in lines[j]:
+                            r_addr = lines[j+3].split("->")[1].strip()
+
                         if LI in lines[j]:
                             break
                     break
     
     if found:
         print("\n\033[1;38;5;220mRecord Found.")
+        choice = input("\n\033[1;36mTrack this delivery on Live Map? (y/n): ").lower()
+        if choice == 'y':
+            show_on_map(s_addr, r_addr)
+
     else:
         print("\n\033[1;38;5;220mNo Record Found.")
 
